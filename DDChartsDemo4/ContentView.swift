@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  ContentView.swift
 //  DDChartsDemo4
 //
 //  Created by joe on 1/7/25.
@@ -22,83 +22,54 @@ struct ContentView: View {
     let yAxisMarkPosition: AxisMarkPosition = .leading
     @State private var isVerticalChart = true
     
+    @State var title = "Chart Title"
+    @State var titleAlignment: HorizontalAlignment = .trailing
+    
     var body: some View {
         VStack {
-            Text("Chart Demo 4")
-                .font(.largeTitle)
-                .fontWeight(.semibold)
-            
-            if isVerticalChart {
-                switch chartType {
-                case .bar:
-                    BarChartVerticalView(dailySales: dailySales, barColors: barColors)
-                case .line:
-                    LineChartVerticalView(dailySales: dailySales, barColors: barColors)
-                case .area:
-                    AreaChartVerticalView(dailySales: dailySales, barColors: barColors)
-                }
-            } else { // horizontal
-                switch chartType {
-                case .bar:
-                    BarChartHorizontalView(dailySales: dailySales, barColors: barColors)
-                case .line:
-                    LineChartHorizontalView(dailySales: dailySales, barColors: barColors)
-                case .area:
-                    AreaChartHorizontalView(dailySales: dailySales, barColors: barColors)
-                }
-            }
-            
-            // chart buttons
             HStack {
-                ColorfulButtonView(
-                    colors: $barColors,
-                    dim: 30,
-                    offset: 10,
-                    action: {}
+                // left chart buttons
+                LeftChartButtonsView(
+                    barColors: $barColors,
+                    chartType: $chartType,
+                    isVerticalChart: $isVerticalChart
                 )
                 
-                Spacer()
-                
-                Button(action: {
-                    withAnimation {
-                        chartType = .bar
+                VStack(alignment: titleAlignment) {
+                    Text(title)
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .padding(.bottom)
+                    
+                    // the chart
+                    if isVerticalChart {
+                        switch chartType {
+                        case .bar:
+                            BarChartVerticalView(dailySales: dailySales, barColors: barColors)
+                        case .line:
+                            LineChartVerticalView(dailySales: dailySales, barColors: barColors)
+                        case .area:
+                            AreaChartVerticalView(dailySales: dailySales, barColors: barColors)
+                        }
+                    } else { // horizontal
+                        switch chartType {
+                        case .bar:
+                            BarChartHorizontalView(dailySales: dailySales, barColors: barColors)
+                        case .line:
+                            LineChartHorizontalView(dailySales: dailySales, barColors: barColors)
+                        case .area:
+                            AreaChartHorizontalView(dailySales: dailySales, barColors: barColors)
+                        }
                     }
-                }, label: {
-                    Text("BAR")
-                })
+                }
                 
-                Spacer()
-                
-                Button(action: {
-                    withAnimation {
-                        chartType = .line
-                    }
-                }, label: {
-                    Text("LINE")
-                })
-                
-                Spacer()
-                
-                Button(action: {
-                    withAnimation {
-                        chartType = .area
-                    }
-                }, label: {
-                    Text("AREA")
-                })
-                
-                Spacer()
-                
-                Button(action: {
-                    withAnimation {
-                        isVerticalChart.toggle()
-                    }
-                }, label: {
-                    Image(systemName: "chart.bar.fill")
-                        .rotationEffect(.degrees(isVerticalChart ? 90 : 0))
-                })
+                // right chart buttons
+                RightChartButtonsView(
+                    barColors: $barColors,
+                    chartType: $chartType,
+                    isVerticalChart: $isVerticalChart
+                )
             }
-            .padding()
         }
         .padding()
     }
