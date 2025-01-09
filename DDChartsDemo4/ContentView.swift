@@ -67,7 +67,8 @@ struct ContentView: View {
                 RightChartButtonsView(
                     barColors: $barColors,
                     chartType: $chartType,
-                    isVerticalChart: $isVerticalChart
+                    isVerticalChart: $isVerticalChart,
+                    titleAlignment: $titleAlignment
                 )
             }
         }

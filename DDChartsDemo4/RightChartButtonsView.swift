@@ -11,9 +11,10 @@ struct RightChartButtonsView: View {
     @Binding var barColors: [Color]
     @Binding var chartType: ChartType
     @Binding var isVerticalChart: Bool
+    @Binding var titleAlignment: HorizontalAlignment
     
     var body: some View {
-        VStack {
+        VStack(spacing: 50) {
             Button(action: {
                 withAnimation {
                     isVerticalChart.toggle()
@@ -21,7 +22,11 @@ struct RightChartButtonsView: View {
             }, label: {
                 Image(systemName: "chart.bar.fill")
                     .rotationEffect(.degrees(isVerticalChart ? 90 : 0))
+                    .foregroundStyle(Color.black)
+                    .opacity(0.7)
             })
+            
+            TitleAlignmentButton(titleAlignment: $titleAlignment)
         }
         .padding()
     }
@@ -35,7 +40,8 @@ struct RightChartButtonsView_Previews: PreviewProvider {
             RightChartButtonsView(
                 barColors: .constant(defaultBarColors),
                 chartType: .constant(.bar),
-                isVerticalChart: .constant(true)
+                isVerticalChart: .constant(true),
+                titleAlignment: .constant(.center)
             )
         }
         .previewInterfaceOrientation(.landscapeRight)
