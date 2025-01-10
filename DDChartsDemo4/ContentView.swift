@@ -24,22 +24,47 @@ struct ContentView: View {
     
     @State var title = "Chart Title"
     @State var titleAlignment: HorizontalAlignment = .trailing
+    @State var editMode: Bool = false
     
     var body: some View {
         VStack {
             HStack {
+                Button(action: {
+                    withAnimation {
+                        editMode.toggle()
+                    }
+                }, label: {
+                    Image(systemName: editMode ? "checkmark" : "square.and.pencil")
+                })
+                
+                if !editMode {
+                    Spacer()
+                    
+                    Button(action: {
+                        withAnimation {
+                            // TODO: sharing
+                        }
+                    }, label: {
+                        Image(systemName: "square.and.arrow.up")
+                    })
+                }
+            }
+            
+            HStack {
                 // left chart buttons
-                LeftChartButtonsView(
-                    barColors: $barColors,
-                    chartType: $chartType,
-                    isVerticalChart: $isVerticalChart
-                )
+                if editMode {
+                    LeftChartButtonsView(
+                        barColors: $barColors,
+                        chartType: $chartType,
+                        isVerticalChart: $isVerticalChart
+                    )
+                }
                 
                 VStack(alignment: titleAlignment) {
                     Text(title)
                         .font(.headline)
                         .fontWeight(.semibold)
-                        .padding(.bottom)
+                        .padding(.vertical)
                     
                     // the chart
                     if isVerticalChart {
@@ -64,12 +89,14 @@ struct ContentView: View {
                 }
                 
                 // right chart buttons
-                RightChartButtonsView(
-                    barColors: $barColors,
-                    chartType: $chartType,
-                    isVerticalChart: $isVerticalChart,
-                    titleAlignment: $titleAlignment
-                )
+                if editMode {
+                    RightChartButtonsView(
+                        barColors: $barColors,
+                        chartType: $chartType,
+                        isVerticalChart: $isVerticalChart,
+                        titleAlignment: $titleAlignment
+                    )
+                }
             }
         }
         .padding()
