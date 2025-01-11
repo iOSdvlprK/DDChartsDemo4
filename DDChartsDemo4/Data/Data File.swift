@@ -10,7 +10,7 @@ import SwiftUI
 struct DailySalesType: Identifiable {
     let id = UUID()
     let day: String
-    let sales: Int
+    let sales: Double
 }
 
 let defaultDailySales: [DailySalesType] = [

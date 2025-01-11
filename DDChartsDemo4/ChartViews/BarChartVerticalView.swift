@@ -21,6 +21,12 @@ struct BarChartVerticalView: View {
                 )
                 .foregroundStyle(by: .value("Day", item.day))
             }
+            
+            RuleMarkView(
+                selectedDay: "Tue",
+                salesOnSelectedDay: 323.4567,
+                intMode: true
+            )
         }
         .chartForegroundStyleScale(range: barColors)
     }
