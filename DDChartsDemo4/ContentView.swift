@@ -16,6 +16,7 @@ struct ContentView: View {
     let dailySales: [DailySalesType]
     let min: Double
     let max: Double
+    @State var selectedDay: String = "Sun"
     @State var barColors: [Color] = defaultBarColors
     @State var chartType: ChartType = .bar
     let xAxisMarkPosition: AxisMarkPosition = .bottom
@@ -70,7 +71,7 @@ struct ContentView: View {
                     if isVerticalChart {
                         switch chartType {
                         case .bar:
-                            BarChartVerticalView(dailySales: dailySales, barColors: barColors)
+                            BarChartVerticalView(dailySales: dailySales, barColors: barColors, editMode: editMode, selectedDay: $selectedDay)
                         case .line:
                             LineChartVerticalView(dailySales: dailySales, barColors: barColors)
                         case .area:
