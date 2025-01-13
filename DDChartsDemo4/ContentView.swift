@@ -13,7 +13,7 @@ enum ChartType {
 }
 
 struct ContentView: View {
-    let dailySales: [DailySalesType]
+    @State var dailySales: [DailySalesType]
     let min: Double
     let max: Double
     @State var selectedDay: String = "Sun"
@@ -71,7 +71,7 @@ struct ContentView: View {
                     if isVerticalChart {
                         switch chartType {
                         case .bar:
-                            BarChartVerticalView(dailySales: dailySales, barColors: barColors, editMode: editMode, selectedDay: $selectedDay)
+                            BarChartVerticalView(dailySales: $dailySales, barColors: barColors, editMode: editMode, selectedDay: $selectedDay, min: 0.0, max: 1000.0)
                         case .line:
                             LineChartVerticalView(dailySales: dailySales, barColors: barColors)
                         case .area:

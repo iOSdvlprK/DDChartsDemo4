@@ -13,6 +13,14 @@ struct DailySalesType: Identifiable {
     let sales: Double
 }
 
+func getSalesOfSelectedDay(dailySales: [DailySalesType], selectedDay: String) -> Double {
+    if let i = dailySales.firstIndex(where: { $0.day == selectedDay }) {
+        return dailySales[i].sales
+    } else {
+        return 0
+    }
+}
+
 func setSalesOfSelectedDay(dailySales: inout [DailySalesType], selectedDay: String, sales: Double, min: Double, max: Double) {
     if let i = dailySales.firstIndex(where: { $0.day == selectedDay }) {
         var newSales: Double
