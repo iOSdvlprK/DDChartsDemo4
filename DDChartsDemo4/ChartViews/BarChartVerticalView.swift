@@ -44,6 +44,12 @@ struct BarChartVerticalView: View {
                     y: .value("Sales", item.sales)
                 )
                 .foregroundStyle(by: .value("Day", item.day))
+                .annotation(position: .top) {
+                    Image(systemName: "circle")
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.red)
+                        .opacity(editMode ? 0.8 : 0.0)
+                }
             }
         }
         .chartForegroundStyleScale(range: barColors)
