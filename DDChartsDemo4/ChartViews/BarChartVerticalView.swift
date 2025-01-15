@@ -13,7 +13,6 @@ struct BarChartVerticalView: View {
     let barColors: [Color]
     let editMode: Bool
     @Binding var selectedDay: String
-    
     let min: Double
     let max: Double
     

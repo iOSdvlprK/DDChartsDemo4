@@ -24,7 +24,7 @@ struct ContentView: View {
     @State private var isVerticalChart = true
     
     @State var title = "Chart Title"
-    @State var titleAlignment: HorizontalAlignment = .trailing
+    @State var titleAlignment: HorizontalAlignment = .leading
     @State var editMode: Bool = false
     
     var body: some View {
