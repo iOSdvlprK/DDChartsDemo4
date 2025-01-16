@@ -9,21 +9,21 @@ import SwiftUI
 import Charts
 
 struct BarChartVerticalView: View {
-    @Binding var dailySales: [DailySalesType]
-    let barColors: [Color]
-    let editMode: Bool
-    @Binding var selectedDay: String
-    let min: Double
-    let max: Double
+    @Binding var chartItem: ChartItem
+    
+    var min: Double { chartItem.min }
+    var max: Double { chartItem.max }
     
     // dragging related values
-    let innerProxyColor: Color = .black.opacity(0.2)
+//    let innerProxyColor: Color = .black.opacity(0.2)
+    let innerProxyColor: Color = .clear
+    
     @State var isDragging: Bool = false
     
     var salesOnSelectedDay: Double {
         getSalesOfSelectedDay(
-            dailySales: dailySales,
-            selectedDay: selectedDay
+            dailySales: chartItem.dailySales,
+            selectedDay: chartItem.selectedDay
         )
     }
     
@@ -31,13 +31,13 @@ struct BarChartVerticalView: View {
         Chart {
             if isDragging {
                 RuleMarkView(
-                    selectedDay: selectedDay,
+                    selectedDay: chartItem.selectedDay,
                     salesOnSelectedDay: salesOnSelectedDay,
                     intMode: true
                 )
             }
             
-            ForEach(dailySales) { item in
+            ForEach(chartItem.dailySales) { item in
                 BarMark(
                     x: .value("Day", item.day),
                     y: .value("Sales", item.sales)
@@ -47,11 +47,11 @@ struct BarChartVerticalView: View {
                     Image(systemName: "circle")
                         .fontWeight(.bold)
                         .foregroundStyle(Color.red)
-                        .opacity(editMode ? 0.8 : 0.0)
+                        .opacity(chartItem.editMode ? 0.8 : 0.0)
                 }
             }
         }
-        .chartForegroundStyleScale(range: barColors)
+        .chartForegroundStyleScale(range: chartItem.barColors)
         .chartYScale(domain: min...max)
         .chartOverlay { proxy in
             GeometryReader { innerProxy in
@@ -62,7 +62,7 @@ struct BarChartVerticalView: View {
                         DragGesture()
                             .onChanged { value in
                                 // TODO: change
-                                if editMode {
+                                if chartItem.editMode {
                                     isDragging = true
                                     
                                     let location = value.location
@@ -72,11 +72,11 @@ struct BarChartVerticalView: View {
                                     print(sales)
                                     
                                     // update selected day
-                                    selectedDay = newDay
+                                    chartItem.selectedDay = newDay
                                     
                                     setSalesOfSelectedDay(
-                                        dailySales: &dailySales,
-                                        selectedDay: selectedDay,
+                                        dailySales: &chartItem.dailySales,
+                                        selectedDay: chartItem.selectedDay,
                                         sales: sales,
                                         min: min,
                                         max: max
@@ -93,12 +93,5 @@ struct BarChartVerticalView: View {
 }
 
 #Preview {
-    BarChartVerticalView(
-        dailySales: .constant(defaultDailySales),
-        barColors: defaultBarColors,
-        editMode: true,
-        selectedDay: .constant("Sun"),
-        min: 0.0,
-        max: 1000.0
-    )
+    BarChartVerticalView(chartItem: .constant(ChartItem.defaultChartItem))
 }

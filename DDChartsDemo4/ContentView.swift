@@ -13,32 +13,34 @@ enum ChartType {
 }
 
 struct ContentView: View {
-    @State var dailySales: [DailySalesType]
-    let min: Double
-    let max: Double
-    @State var selectedDay: String = "Sun"
-    @State var barColors: [Color] = defaultBarColors
-    @State var chartType: ChartType = .bar
+    @State var chartItem: ChartItem
+    
+//    @State var dailySales: [DailySalesType]
+//    let min: Double
+//    let max: Double
+//    @State var selectedDay: String = "Sun"
+//    @State var barColors: [Color] = defaultBarColors
+//    @State var chartType: ChartType = .bar
+//    @State private var isVerticalChart = true
+//    @State var title = "Chart Title"
+//    @State var titleAlignment: HorizontalAlignment = .leading
+//    @State var editMode: Bool = false
+    
     let xAxisMarkPosition: AxisMarkPosition = .bottom
     let yAxisMarkPosition: AxisMarkPosition = .leading
-    @State private var isVerticalChart = true
-    
-    @State var title = "Chart Title"
-    @State var titleAlignment: HorizontalAlignment = .leading
-    @State var editMode: Bool = false
     
     var body: some View {
         VStack {
             HStack {
                 Button(action: {
                     withAnimation {
-                        editMode.toggle()
+                        chartItem.editMode.toggle()
                     }
                 }, label: {
-                    Image(systemName: editMode ? "checkmark" : "square.and.pencil")
+                    Image(systemName: chartItem.editMode ? "checkmark" : "square.and.pencil")
                 })
                 
-                if !editMode {
+                if !chartItem.editMode {
                     Spacer()
                     
                     Button(action: {
@@ -53,7 +55,7 @@ struct ContentView: View {
             
             HStack {
                 // left chart buttons
-                if editMode {
+                if chartItem.editMode {
                     LeftChartButtonsView(
                         barColors: $barColors,
                         chartType: $chartType,
@@ -61,15 +63,15 @@ struct ContentView: View {
                     )
                 }
                 
-                VStack(alignment: titleAlignment) {
-                    Text(title)
+                VStack(alignment: chartItem.titleAlignment) {
+                    Text(chartItem.title)
                         .font(.headline)
                         .fontWeight(.semibold)
                         .padding(.vertical)
                     
                     // the chart
-                    if isVerticalChart {
-                        switch chartType {
+                    if chartItem.isVerticalChart {
+                        switch chartItem.chartType {
                         case .bar:
                             BarChartVerticalView(dailySales: $dailySales, barColors: barColors, editMode: editMode, selectedDay: $selectedDay, min: 0.0, max: 1000.0)
                         case .line:
@@ -78,7 +80,7 @@ struct ContentView: View {
                             AreaChartVerticalView(dailySales: dailySales, barColors: barColors)
                         }
                     } else { // horizontal
-                        switch chartType {
+                        switch chartItem.chartType {
                         case .bar:
                             BarChartHorizontalView(dailySales: dailySales, barColors: barColors)
                         case .line:
