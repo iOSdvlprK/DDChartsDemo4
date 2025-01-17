@@ -15,17 +15,6 @@ enum ChartType {
 struct ContentView: View {
     @State var chartItem: ChartItem
     
-//    @State var dailySales: [DailySalesType]
-//    let min: Double
-//    let max: Double
-//    @State var selectedDay: String = "Sun"
-//    @State var barColors: [Color] = defaultBarColors
-//    @State var chartType: ChartType = .bar
-//    @State private var isVerticalChart = true
-//    @State var title = "Chart Title"
-//    @State var titleAlignment: HorizontalAlignment = .leading
-//    @State var editMode: Bool = false
-    
     let xAxisMarkPosition: AxisMarkPosition = .bottom
     let yAxisMarkPosition: AxisMarkPosition = .leading
     

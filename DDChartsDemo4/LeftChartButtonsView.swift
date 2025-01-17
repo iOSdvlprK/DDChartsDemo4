@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct LeftChartButtonsView: View {
-    @Binding var barColors: [Color]
-    @Binding var chartType: ChartType
-    @Binding var isVerticalChart: Bool
+    @Binding var chartItem: ChartItem
     
     var body: some View {
         VStack {
             Button(action: {
                 withAnimation {
-                    chartType = .bar
+                    chartItem.chartType = .bar
                 }
             }, label: {
                 Text("BAR")
@@ -26,7 +24,7 @@ struct LeftChartButtonsView: View {
             
             Button(action: {
                 withAnimation {
-                    chartType = .line
+                    chartItem.chartType = .line
                 }
             }, label: {
                 Text("LINE")
@@ -36,7 +34,7 @@ struct LeftChartButtonsView: View {
             
             Button(action: {
                 withAnimation {
-                    chartType = .area
+                    chartItem.chartType = .area
                 }
             }, label: {
                 Text("AREA")
@@ -45,7 +43,7 @@ struct LeftChartButtonsView: View {
             Spacer()
             
             ColorfulButtonView(
-                colors: $barColors,
+                colors: $chartItem.barColors,
                 dim: 30,
                 offset: 10,
                 action: {}
@@ -58,11 +56,7 @@ struct LeftChartButtonsView: View {
 struct LeftChartButtonsView_Previews: PreviewProvider {
     static var previews: some View {
         HStack {
-            LeftChartButtonsView(
-                barColors: .constant(defaultBarColors),
-                chartType: .constant(.bar),
-                isVerticalChart: .constant(true)
-            )
+            LeftChartButtonsView(chartItem: .constant(.defaultChartItem))
             
             Spacer()
         }
