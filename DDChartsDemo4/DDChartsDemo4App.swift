@@ -11,12 +11,7 @@ import SwiftUI
 struct DDChartsDemo4App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(
-                dailySales: defaultDailySales,
-                min: 0.0,
-                max: 700.0,
-                barColors: defaultBarColors
-            )
+            ContentView()
         }
     }
 }

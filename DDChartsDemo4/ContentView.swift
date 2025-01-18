@@ -13,7 +13,7 @@ enum ChartType {
 }
 
 struct ContentView: View {
-    @State var chartItem: ChartItem
+    @State var chartItem: ChartItem = .defaultChartItem
     
     let xAxisMarkPosition: AxisMarkPosition = .bottom
     let yAxisMarkPosition: AxisMarkPosition = .leading
@@ -45,11 +45,7 @@ struct ContentView: View {
             HStack {
                 // left chart buttons
                 if chartItem.editMode {
-                    LeftChartButtonsView(
-                        barColors: $barColors,
-                        chartType: $chartType,
-                        isVerticalChart: $isVerticalChart
-                    )
+                    LeftChartButtonsView(chartItem: $chartItem)
                 }
                 
                 VStack(alignment: chartItem.titleAlignment) {
@@ -62,32 +58,27 @@ struct ContentView: View {
                     if chartItem.isVerticalChart {
                         switch chartItem.chartType {
                         case .bar:
-                            BarChartVerticalView(dailySales: $dailySales, barColors: barColors, editMode: editMode, selectedDay: $selectedDay, min: 0.0, max: 1000.0)
+                            BarChartVerticalView(chartItem: $chartItem)
                         case .line:
-                            LineChartVerticalView(dailySales: dailySales, barColors: barColors)
+                            LineChartVerticalView(chartItem: $chartItem)
                         case .area:
-                            AreaChartVerticalView(dailySales: dailySales, barColors: barColors)
+                            AreaChartVerticalView(chartItem: $chartItem)
                         }
                     } else { // horizontal
                         switch chartItem.chartType {
                         case .bar:
-                            BarChartHorizontalView(dailySales: dailySales, barColors: barColors)
+                            BarChartHorizontalView(chartItem: $chartItem)
                         case .line:
-                            LineChartHorizontalView(dailySales: dailySales, barColors: barColors)
+                            LineChartHorizontalView(chartItem: $chartItem)
                         case .area:
-                            AreaChartHorizontalView(dailySales: dailySales, barColors: barColors)
+                            AreaChartHorizontalView(chartItem: $chartItem)
                         }
                     }
                 }
                 
                 // right chart buttons
-                if editMode {
-                    RightChartButtonsView(
-                        barColors: $barColors,
-                        chartType: $chartType,
-                        isVerticalChart: $isVerticalChart,
-                        titleAlignment: $titleAlignment
-                    )
+                if chartItem.editMode {
+                    RightChartButtonsView(chartItem: $chartItem)
                 }
             }
         }
@@ -97,11 +88,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(
-            dailySales: defaultDailySales,
-            min: 0.0,
-            max: 700.0
-        )
+        ContentView()
         .previewInterfaceOrientation(.landscapeRight)
     }
 }
