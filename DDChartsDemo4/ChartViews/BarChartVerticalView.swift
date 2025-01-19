@@ -15,7 +15,6 @@ struct BarChartVerticalView: View {
     var max: Double { chartItem.max }
     
     // dragging related values
-//    let innerProxyColor: Color = .black.opacity(0.2)
     let innerProxyColor: Color = .clear
     
     @State var isDragging: Bool = false
@@ -30,11 +29,7 @@ struct BarChartVerticalView: View {
     var body: some View {
         Chart {
             if isDragging {
-                RuleMarkView(
-                    selectedDay: chartItem.selectedDay,
-                    salesOnSelectedDay: salesOnSelectedDay,
-                    intMode: true
-                )
+                RuleMarkForVerticalView(chartItem: chartItem, salesOnSelectedDay: salesOnSelectedDay)
             }
             
             ForEach(chartItem.dailySales) { item in

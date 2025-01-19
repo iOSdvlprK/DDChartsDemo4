@@ -1,5 +1,5 @@
 //
-//  RuleMarkView.swift
+//  RuleMarkForVerticalView.swift
 //  DDChartsDemo4
 //
 //  Created by joe on 1/11/25.
@@ -8,10 +8,16 @@
 import SwiftUI
 import Charts
 
-struct RuleMarkView: ChartContent {
-    let selectedDay: String
+struct RuleMarkForVerticalView: ChartContent {
+    let chartItem: ChartItem
     let salesOnSelectedDay: Double
-    let intMode: Bool
+    
+    var selectedDay: String {
+        chartItem.selectedDay
+    }
+    var intMode: Bool {
+        chartItem.intMode
+    }
     var precision: Int {
         intMode ? 0 : 1
     }

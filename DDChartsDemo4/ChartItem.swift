@@ -19,6 +19,7 @@ struct ChartItem: Identifiable {
     var titleAlignment: HorizontalAlignment
     var chartType: ChartType
     var isVerticalChart: Bool
+    var intMode: Bool
     
     static let defaultChartItem: ChartItem = .init(
         dailySales: defaultDailySales,
@@ -30,6 +31,7 @@ struct ChartItem: Identifiable {
         title: "Happy New Year",
         titleAlignment: .leading,
         chartType: .bar,
-        isVerticalChart: true
+        isVerticalChart: true,
+        intMode: true
     )
 }
