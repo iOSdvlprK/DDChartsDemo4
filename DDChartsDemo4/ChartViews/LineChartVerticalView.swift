@@ -9,22 +9,42 @@ import SwiftUI
 import Charts
 
 struct LineChartVerticalView: View {
-    let dailySales: [DailySalesType]
-    let barColors: [Color]
+    @Binding var chartItem: ChartItem
+    
+    var min: Double { chartItem.min }
+    var max: Double { chartItem.max }
+    
+    @State var isDragging: Bool = false
+    
+    var salesOnSelectedDay: Double {
+        getSalesOfSelectedDay(
+            dailySales: chartItem.dailySales,
+            selectedDay: chartItem.selectedDay
+        )
+    }
     
     var body: some View {
         Chart {
-            ForEach(dailySales) { item in
+            ForEach(chartItem.dailySales) { item in
                 LineMark(
                     x: .value("Day", item.day),
                     y: .value("Sales", item.sales)
                 )
+                .foregroundStyle(chartItem.lineAreaColor)
+                .symbol() {
+                    Annotate_Line_Area_Graph(chartItem: chartItem)
+                }
+            }
+            
+            if isDragging {
+                RuleMarkForVerticalView(chartItem: chartItem, salesOnSelectedDay: salesOnSelectedDay)
             }
         }
-        .chartForegroundStyleScale(range: barColors)
+        .chartYScale(domain: min...max)
+        .modifier(ChartDragForVerticalView(chartItem: $chartItem, isDragging: $isDragging))
     }
 }
 
 #Preview {
-    LineChartVerticalView(dailySales: defaultDailySales, barColors: defaultBarColors)
+    LineChartVerticalView(chartItem: .constant(.defaultChartItem))
 }
