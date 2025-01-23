@@ -59,19 +59,15 @@ struct ContentView: View {
                         switch chartItem.chartType {
                         case .bar:
                             BarChartVerticalView(chartItem: $chartItem)
-                        case .line:
-                            LineChartVerticalView(chartItem: $chartItem)
-                        case .area:
-                            AreaChartVerticalView(chartItem: $chartItem)
+                        case .line, .area:
+                            LineAreaChartVerticalView(chartItem: $chartItem)
                         }
                     } else { // horizontal
                         switch chartItem.chartType {
                         case .bar:
                             BarChartHorizontalView(chartItem: $chartItem)
-                        case .line:
-                            LineChartHorizontalView(chartItem: $chartItem)
-                        case .area:
-                            AreaChartHorizontalView(chartItem: $chartItem)
+                        case .line, .area:
+                            LineAreaChartHorizontalView(chartItem: $chartItem)
                         }
                     }
                 }

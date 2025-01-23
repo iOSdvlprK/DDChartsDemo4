@@ -1,5 +1,5 @@
 //
-//  LineChartHorizontalView.swift
+//  LineAreaChartVerticalView.swift
 //  DDChartsDemo3
 //
 //  Created by joe on 1/5/25.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Charts
 
-struct LineChartHorizontalView: View {
+struct LineAreaChartVerticalView: View {
     @Binding var chartItem: ChartItem
     
     var min: Double { chartItem.min }
@@ -26,9 +26,17 @@ struct LineChartHorizontalView: View {
     var body: some View {
         Chart {
             ForEach(chartItem.dailySales) { item in
+                if chartItem.chartType == .area {
+                    AreaMark(
+                        x: .value("Day", item.day),
+                        y: .value("Sales", item.sales)
+                    )
+                    .foregroundStyle(chartItem.lineAreaColor.opacity(0.3))
+                }
+                
                 LineMark(
-                    x: .value("Sales", item.sales),
-                    y: .value("Day", item.day)
+                    x: .value("Day", item.day),
+                    y: .value("Sales", item.sales)
                 )
                 .foregroundStyle(chartItem.lineAreaColor)
                 .symbol() {
@@ -37,14 +45,14 @@ struct LineChartHorizontalView: View {
             }
             
             if isDragging {
-                RuleMarkForHorizontalView(chartItem: chartItem, salesOnSelectedDay: salesOnSelectedDay)
+                RuleMarkForVerticalView(chartItem: chartItem, salesOnSelectedDay: salesOnSelectedDay)
             }
         }
-        .chartXScale(domain: min...max)
-        .modifier(ChartDragForHorizontalView(chartItem: $chartItem, isDragging: $isDragging))
+        .chartYScale(domain: min...max)
+        .modifier(ChartDragForVerticalView(chartItem: $chartItem, isDragging: $isDragging))
     }
 }
 
 #Preview {
-    LineChartHorizontalView(chartItem: .constant(.defaultChartItem))
+    LineAreaChartVerticalView(chartItem: .constant(.defaultChartItem))
 }
