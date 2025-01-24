@@ -44,13 +44,3 @@ let defaultDailySales: [DailySalesType] = [
     .init(day: "Fri", sales: 120),
     .init(day: "Sat", sales: 211)
 ]
-
-let defaultBarColors: [Color] = [
-    .pink,
-    .green,
-    .mint,
-    .purple,
-    .indigo,
-    .red,
-    .brown
-]

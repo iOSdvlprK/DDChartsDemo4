@@ -16,7 +16,7 @@ struct RandomArcFromColorListView: View {
     let opacity: CGFloat
     
     // random constant
-    let startTrim = Double.random(in: 0...0.5)
+    let startTrim = 0.0
     let endTrim = 1.0
 //    let endTrim = Double.random(in: 0.6...1.0)
     
@@ -32,7 +32,7 @@ struct RandomArcFromColorListView: View {
     var endRadius: CGFloat {
         minRadius + maxRadius / count
     }
-    var rotate: CGFloat { Double.random(in: 0...360) }
+    var rotate: CGFloat { 0.0 }
     
     var body: some View {
         ArcView(
