@@ -11,7 +11,7 @@ import SwiftUI
 struct DDChartsDemo4App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainViewWithTitleAndBorder()
         }
     }
 }

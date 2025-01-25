@@ -21,6 +21,7 @@ struct ChartItem: Identifiable {
     var isVerticalChart: Bool
     var intMode: Bool
     var lineAreaColor: Color
+    var showBorder: Bool
     
     static let defaultChartItem: ChartItem = .init(
         dailySales: defaultDailySales,
@@ -34,6 +35,7 @@ struct ChartItem: Identifiable {
         chartType: .bar,
         isVerticalChart: true,
         intMode: true,
-        lineAreaColor: .purple
+        lineAreaColor: .purple,
+        showBorder: true
     )
 }
