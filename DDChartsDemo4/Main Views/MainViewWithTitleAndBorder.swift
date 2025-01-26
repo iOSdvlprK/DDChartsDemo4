@@ -39,45 +39,47 @@ struct MainViewWithTitleAndBorder: View {
                     })
                 }
             }
-
-            VStack(alignment: chartItem.titleAlignment) {
-                if !editTitle {
-                    Text(chartItem.title)
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .onTapGesture {
-                            editTitle.toggle()
-                        }
-                } else {
-                    TextField(chartItem.title, text: $chartItem.title)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .onSubmit {
-                            editTitle.toggle()
-                        }
+            .padding(.top)
+            
+            // buttons and charts
+            HStack {
+                // left chart buttons
+                if chartItem.editMode {
+                    LeftChartButtonsView(chartItem: $chartItem)
                 }
                 
-                // buttons and charts
-                HStack {
-                    // left chart buttons
-                    if chartItem.editMode {
-                        LeftChartButtonsView(chartItem: $chartItem)
+                VStack(alignment: chartItem.titleAlignment) {
+                    
+                    if !editTitle {
+                        Text(chartItem.title)
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .onTapGesture {
+                                editTitle.toggle()
+                            }
+                    } else {
+                        TextField(chartItem.title, text: $chartItem.title)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .onSubmit {
+                                editTitle.toggle()
+                            }
                     }
                     
                     // the chart
                     ContentView(chartItem: $chartItem)
-                    
-                    // right chart buttons
-                    if chartItem.editMode {
-                        RightChartButtonsView(chartItem: $chartItem)
-                    }
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(borderColor)
+                )
+                .padding()
+                
+                // right chart buttons
+                if chartItem.editMode {
+                    RightChartButtonsView(chartItem: $chartItem)
                 }
             }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(borderColor)
-            )
-            .padding()
         }
     }
 }
